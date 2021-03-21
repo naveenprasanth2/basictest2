@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite" thread-count="5" parallel = "tests">
+  <test thread-count="5" name="Test" parallel = "classes">
+    <classes>
+      <class name="datadriven.Testingdata"/>
+      <class name="Selenium.basictest.broken_links_scroll"/>
+      <class name="Selenium.basictest.alerts"/>
+      <class name="Selenium.basictest.table_handling"/>
+      <class name="finalprac.Rahulshetty"/>
+      <class name="Selenium.basictest.broken_links"/>
+    </classes>
+     </test> 
+    <test thread-count="5" name="regression" parallel="classes">
+    <classes>
+      <class name="Selenium.basictest.extentreports"/>
+      <class name="datadriven.Exceldata"/>
+      <class name="Selenium.basictest.test2"/>
+      <class name="finalprac.RahulShetty1"/>
+      <class name="Selenium.basictest.test"/>
+      <class name="lastprac.Rahulshetty1"/>
+      <class name="Selenium.basictest.flipkart"/>
+      <class name="Selenium.basictest.draganddrop"/>
+      <class name="lastprac.Rahulshetty"/>
+      <class name="Selenium.basictest.handling_alerts"/>
+      <class name="Selenium.basictest.AppTest"/>
+      <class name="lastprac.RahulShetty2"/>
+      </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
