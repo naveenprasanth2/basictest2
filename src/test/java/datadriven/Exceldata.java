@@ -69,6 +69,6 @@ public class Exceldata {
 		driver.quit();
 	}
 	public void summa() {
-		System.out.println("summa");
+		System.out.println("summa1");
 	}
 }
