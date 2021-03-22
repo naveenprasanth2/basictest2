@@ -68,4 +68,7 @@ public class Exceldata {
 	public void after() {
 		driver.quit();
 	}
+	public void summa() {
+		
+	}
 }
