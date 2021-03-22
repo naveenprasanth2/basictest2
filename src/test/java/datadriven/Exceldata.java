@@ -31,7 +31,7 @@ public class Exceldata {
 		driver.findElement(By.name("q")).sendKeys(first);
 		driver.findElement(By.name("q")).sendKeys(last);
 	}
-;;;
+
 	@DataProvider(name="summa")
 	
 	public Object[][] data()
