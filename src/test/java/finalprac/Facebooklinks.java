@@ -10,11 +10,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class Facebooklinks {
-	@Test
-	public void test() throws IOException {
+	
+	@Test(dataProvider="summa")
+	public void test(String Arg1 , String Arg2) throws IOException {
 		System.setProperty("webdriver.chrome.driver",
 				System.getProperty("user.dir") + "\\src\\main\\java\\resources\\chromedriver.exe");
 		ChromeOptions co = new ChromeOptions();
@@ -39,6 +41,18 @@ public class Facebooklinks {
 			}
 		}
 System.out.println(i);
+System.out.println(Arg1);
+System.out.println(Arg2);
 	}
 
+	@DataProvider(name="summa")
+	public Object[][] summa(){
+	Object[][] test = new Object[2][2];
+	test[0][0] = "summa";
+	test[0][1] = "summa1";
+	test[1][0] = "summa2";
+	test[1][1] = "summa3";
+
+	return test;
+	}
 }

@@ -2,6 +2,7 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite" thread-count="5" parallel = "tests">
   <test thread-count="5" name="Test" parallel = "classes">
+  <parameter name = "summa" value="summa"/>
     <classes>
       <class name="datadriven.Testingdata"/>
       <class name="Selenium.basictest.broken_links_scroll"/>
