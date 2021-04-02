@@ -2,8 +2,9 @@ package datadriven;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Set;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
@@ -11,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
@@ -38,16 +40,21 @@ public class SummaTest1 {
 		WebDriver driver = new ChromeDriver();
 		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
 		driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
-		driver.findElement(By.id("opentab")).click();
-		
-		Set<String> windows = driver.getWindowHandles();
-		Iterator<String> iter = windows.iterator();
-		String parent = iter.next();
-		String child = iter.next();
-		driver.switchTo().window(child);
-		driver.findElement(By.linkText("Courses")).click();
-		Thread.sleep(5000);
-		driver.switchTo().window(parent);
+
+		List<WebElement> lists = driver.findElements(By.xpath("//li //a"));
+		for(WebElement list : lists){
+		URL url = new URL(list.getAttribute("href"));
+		HttpURLConnection connect = (HttpURLConnection) url.openConnection();
+		connect.connect();
+		connect.getHeaderField("HEAD");
+		int response = connect.getResponseCode();
+		if(response<400){
+		System.out.println("link is working fine");
+		}
+		else{
+		System.out.println("link is not working fine");
+		}
+		}
 		
 		String reportpath = System.getProperty("user.dir")+"\\reports\\testing.html";
 		String screenpath = System.getProperty("user.dir")+"\\src\\main\\java\\screenshots\\phase1.png";
