@@ -2,18 +2,37 @@ package datadriven;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 public class TestExcel {
-	public static void main(String[] args) throws IOException {
+	
+	@Test(dataProvider="test")
+	public void summa(String test, String test1)
+	{
+		System.out.println(test);
+		System.out.println(test1+" summa");
+	}
+	
+	
+	
+	
+	
+	
+	
+	@DataProvider(name="test")
+	public Object[][] test() throws IOException {
 		FileInputStream fis = new FileInputStream(
 				System.getProperty("user.dir") + "\\src\\main\\java\\resources\\testing.xlsx");
 		XSSFWorkbook workbook = new XSSFWorkbook(fis);
+		Object[][] list = new Object[1][2];
 		int sheetcount = workbook.getNumberOfSheets();
 		int columnvalue = 0;
 		int rowvalue = 0;
@@ -44,10 +63,13 @@ public class TestExcel {
 				Iterator<Cell> intendedcell1 = expectedrow1.cellIterator();
 				while (intendedcell1.hasNext()) {
 					String result = intendedcell1.next().getStringCellValue();
-					System.out.println(result);
+					list[0][0] = result;
+					list[0][1] = result;
 				}
+				break;
 			}
 		}
+		return list;
 	}
 
 }
