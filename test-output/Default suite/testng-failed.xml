@@ -3,11 +3,11 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="datadriven.Excel">
+      <class name="Selenium.basictest.dryrun">
         <methods>
-          <include name="test"/>
+          <include name="dry"/>
         </methods>
-      </class> <!-- datadriven.Excel -->
+      </class> <!-- Selenium.basictest.dryrun -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

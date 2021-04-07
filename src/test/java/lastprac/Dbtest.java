@@ -12,12 +12,11 @@ public class Dbtest {
 		// TODO Auto-generated method stub
 
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/qadbt","root","root");
-		Statement  s = con.createStatement();
-		ResultSet rs = s.executeQuery("Select * from testing");
+		Statement s = con.createStatement();
+		ResultSet rs = s.executeQuery("select * from testing");
 
 		while(rs.next()){
 		System.out.println(rs.getString("name"));
-		System.out.println(rs.getString("age"));
 		}
 	}
 }
