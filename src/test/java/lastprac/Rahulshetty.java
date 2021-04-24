@@ -49,12 +49,11 @@ public class Rahulshetty {
 		
 		driver.findElement(By.id("openwindow")).click();
 		Set<String> windows = driver.getWindowHandles();
-		Iterator<String> ite = windows.iterator();
-		String parent = ite.next();
-		String child = ite.next();
+		Iterator<String> iter = windows.iterator();
+		String parent = iter.next();
+		String child = iter.next();
 		driver.switchTo().window(child);
-		String title = driver.getCurrentUrl();
-		System.out.println(title);
+		System.out.println(driver.getTitle());
 		driver.close();
 		driver.switchTo().window(parent);
 		System.out.println(driver.getTitle());

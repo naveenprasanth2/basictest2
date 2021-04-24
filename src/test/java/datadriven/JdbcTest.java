@@ -12,11 +12,11 @@ public class JdbcTest {
 		// TODO Auto-generated method stub
 		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/qadbt","root","root");
 		Statement s = con.createStatement();
-		ResultSet rs = s.executeQuery("select * from testing");
+		ResultSet rs = s.executeQuery("select * from testing where name like 'n%'");
 		while(rs.next()){
 		System.out.println(rs.getString("name"));
-		}
 
+		}
 	}
 
 }

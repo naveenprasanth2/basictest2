@@ -68,19 +68,18 @@ public class Rahulshetty1 {
 		}
 
 		List<WebElement> urlls = driver.findElements(By.cssSelector("li.gf-li a"));
-		for (WebElement urll : urlls) {
-			URL url = new URL(urll.getAttribute("href"));
-			HttpURLConnection connect = (HttpURLConnection) url.openConnection();
-			connect.connect();
-			connect.getHeaderField("HEAD");
-			int response = connect.getResponseCode();
-			if (response < 400) {
-				System.out.println("link is working " + url);
+		for (WebElement list : urlls) {
+			URL url = new URL(list.getAttribute("href"));
+			HttpURLConnection con = (HttpURLConnection) url.openConnection();
+			con.connect();
+			con.getHeaderField("HEAD");
+			int response = con.getResponseCode();
+			if (response > 400) {
+				System.out.println("link not working");
 			} else {
-				System.out.println("link is not working fine " + url);
+				System.out.println("link working");
 			}
 		}
-
 
 		driver.close();
 	}
