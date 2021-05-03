@@ -1,9 +1,8 @@
-package pratice;
+package intervew;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 import org.apache.commons.io.FileUtils;
@@ -14,56 +13,65 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
-public class SummaTest {
+public class SummaPractice {
 
 	@Test
 	public void test() throws IOException {
-		String path = System.getProperty("user.dir") + "\\src\\main\\java\\resources\\chromedriver.exe";
-		System.setProperty("webdriver.chrome.driver", path);
-		String reportPath = System.getProperty("user.dir") + "\\reports\\newReport.html";
-		String screenPath = System.getProperty("user.dir") + "\\src\\main\\java\\screenshots\\summa.png";
+		String chromepath = System.getProperty("user.dir") + "\\src\\main\\java\\resources\\chromedriver.exe";
+		String screenpath = System.getProperty("user.dir") + "\\src\\main\\java\\screenshots\\summa.png";
+		String reportpath = System.getProperty("user.dir") + "\\reports\\summareport1.html";
+
+		System.setProperty("webdriver.chrome.driver", chromepath);
 		DesiredCapabilities dc = new DesiredCapabilities();
 		dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 		dc.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
 
 		ChromeOptions co = new ChromeOptions();
-		co.addArguments("--headless");
+		co.addArguments("headless");
+		co.addArguments("--disable-info-bars");
 		co.addArguments("--window-size=1920,1080");
 		co.merge(dc);
 
 		WebDriver driver = new ChromeDriver(co);
-		driver.get("https://rahulshettyacademy.com");
-		driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
+		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
 
-
-		ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
-		spark.config().setDocumentTitle("regression");
-		spark.config().setReportName("regression");
+		ExtentSparkReporter spark = new ExtentSparkReporter(reportpath);
+		spark.config().setReportName("Regression1");
+		spark.config().setDocumentTitle("Phase1");
 
 		ExtentReports report = new ExtentReports();
 		report.attachReporter(spark);
-		report.setSystemInfo("tester","naveen");
+		report.setSystemInfo("tester", "naveen");
 
-		ExtentTest test = report.createTest("summa");
+		ExtentTest test = report.createTest("test1");
 
 		TakesScreenshot sc = (TakesScreenshot) driver;
 		File src = sc.getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(src , new File(screenPath));
-		test.addScreenCaptureFromPath(screenPath);
+		FileUtils.copyFile(src, new File(screenpath));
+		test.addScreenCaptureFromPath(screenpath);
+
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(5))
+				.pollingEvery(Duration.ofSeconds(5)).ignoring(Exception.class);
+		WebElement foo = wait.until(new Function<WebDriver, WebElement>() {
+			@Override
+			public WebElement apply(WebDriver t) {
+				if (driver.findElement(By.xpath("")).isDisplayed()) {
+					return driver.findElement(By.xpath(""));
+				} else {
+					return null;
+				}
+			}
+		});
 
 		report.flush();
 		driver.quit();
