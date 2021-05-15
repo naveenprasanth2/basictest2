@@ -2,16 +2,21 @@ package Selenium.basictest;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
@@ -56,6 +61,22 @@ public class alerts {
 				System.out.println("deleted");
 			}
 		}
+		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(10)).pollingEvery(Duration.ofSeconds(2)).ignoring(Exception.class);
+
+		WebElement foo = wait.until(new Function<WebDriver,WebElement>(){
+
+		@Override
+		public WebElement apply(WebDriver t){
+		if(driver.findElement(By.xpath("")).isDisplayed()){
+		return driver.findElement(By.xpath(""));
+		}
+		else{
+		return null;
+		}
+
+		}
+
+		});
 		
 	}
 

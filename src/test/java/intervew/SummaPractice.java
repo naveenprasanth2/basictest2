@@ -2,21 +2,17 @@ package intervew;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
-import java.util.function.Function;
 
 import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.By;
+import org.apache.commons.mail.EmailException;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentReports;
@@ -26,7 +22,7 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 public class SummaPractice {
 
 	@Test
-	public void test() throws IOException {
+	public void test() throws IOException, EmailException, InterruptedException {
 		String chromepath = System.getProperty("user.dir") + "\\src\\main\\java\\resources\\chromedriver.exe";
 		String screenpath = System.getProperty("user.dir") + "\\src\\main\\java\\screenshots\\summa.png";
 		String reportpath = System.getProperty("user.dir") + "\\reports\\summareport1.html";
@@ -55,26 +51,17 @@ public class SummaPractice {
 
 		ExtentTest test = report.createTest("test1");
 
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scroll(0,500)");
+		Thread.sleep(5000);
+		js.executeScript("document.querySelector('div.tableFixHead').scrollTop=5000");
+		
 		TakesScreenshot sc = (TakesScreenshot) driver;
 		File src = sc.getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(src, new File(screenpath));
 		test.addScreenCaptureFromPath(screenpath);
 
-		Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(Duration.ofSeconds(5))
-				.pollingEvery(Duration.ofSeconds(5)).ignoring(Exception.class);
-		WebElement foo = wait.until(new Function<WebDriver, WebElement>() {
-			@Override
-			public WebElement apply(WebDriver t) {
-				if (driver.findElement(By.xpath("")).isDisplayed()) {
-					return driver.findElement(By.xpath(""));
-				} else {
-					return null;
-				}
-			}
-		});
-
-		report.flush();
-		driver.quit();
+		
 	}
 
 }

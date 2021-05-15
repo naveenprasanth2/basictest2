@@ -1,4 +1,4 @@
-package datadriven;
+package pratice;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,51 +19,50 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
-public class JavaScriptExecutor {
-
+public class Summa {
 	@Test
-	public void test() throws InterruptedException, IOException {
-		// TODO Auto-generated method stub
-		WebDriver driver;
-		String webpath = System.getProperty("user.dir")+"\\src\\main\\java\\resources\\chromedriver.exe";
-		String reportpath = System.getProperty("user.dir")+"\\reports\\newtest.html";
-		String screenpath = System.getProperty("user.dir")+"\\src\\main\\java\\screenshots\\summa.png";
-		System.setProperty("webdriver.chrome.driver",webpath);
+	public void test() throws IOException,InterruptedException {
+		String chromepath = System.getProperty("user.dir") + "\\src\\main\\java\\resources\\chromedriver.exe";
+		String screenpath = System.getProperty("user.dir") + "\\src\\main\\java\\screenshots\\summa.png";
+		String reportpath = System.getProperty("user.dir") + "\\reports\\Testreport.html";
+
+		System.setProperty("webdriver.chrome.driver",chromepath);
+
+		DesiredCapabilities dc = new DesiredCapabilities();
+		dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
+		dc.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
+
+		ChromeOptions co = new ChromeOptions();
+		co.addArguments("--headless");
+		co.addArguments("--disable-info-bars");
+		co.addArguments("--window-size=1920,1080");
+		co.merge(dc);
+
+		WebDriver driver = new ChromeDriver(co);
+		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
 
 		ExtentSparkReporter spark = new ExtentSparkReporter(reportpath);
 		spark.config().setReportName("regression");
 		spark.config().setDocumentTitle("phase1");
-
 		ExtentReports report = new ExtentReports();
 		report.attachReporter(spark);
-		report.setSystemInfo("naveen","tester");
+		report.setSystemInfo("tester","Naveen");
+		ExtentTest test = report.createTest("test1");
 
-		ExtentTest test = report.createTest("summa");
-
-		DesiredCapabilities dc = new DesiredCapabilities();
-		dc.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS,true);
-		dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS,true);
-
-		ChromeOptions co = new ChromeOptions();
-		co.addArguments("headless");
-		co.addArguments("disable-infobars");
-		co.addArguments("--window-size=1920,1080");
-		co.merge(dc);
-		
-		driver = new ChromeDriver(co);
-		driver.get("https://rahulshettyacademy.com/AutomationPractice/");
-		driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scroll(0,500)");
+		Thread.sleep(5000);
 		js.executeScript("document.querySelector('div.tableFixHead').scrollTop=5000");
 
 		TakesScreenshot sc = (TakesScreenshot) driver;
 		File src = sc.getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(src, new File(screenpath));
-
+		FileUtils.copyFile( src , new File(screenpath));
 		test.addScreenCaptureFromPath(screenpath);
-		report.flush();
 
+		report.flush();
 		driver.quit();
+
 	}
+
 }

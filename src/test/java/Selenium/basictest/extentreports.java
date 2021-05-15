@@ -2,6 +2,7 @@ package Selenium.basictest;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -41,8 +42,10 @@ public class extentreports {
 		driver.get("https://www.rahulshettyacademy.com/AutomationPractice/");
 		System.out.println(driver.getTitle());
 		test.fail("summa");
-		report.flush();
-		
 	}
 
+	@AfterTest
+	public void summa() {
+		report.flush();
+	}
 }
