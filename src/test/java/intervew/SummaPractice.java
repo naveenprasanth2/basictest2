@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.mail.EmailException;
+import org.junit.Assert;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -50,6 +51,8 @@ public class SummaPractice {
 		report.setSystemInfo("tester", "naveen");
 
 		ExtentTest test = report.createTest("test1");
+		
+		Assert.assertTrue(false);
 
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("window.scroll(0,500)");
